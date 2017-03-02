@@ -1,5 +1,9 @@
 (function($) {
 
+    function get_decimal_from_total($total) {
+        return parseInt($total.data('decimal'));
+    }
+
     function setVal($total, val) {
         var curVal = parseFloat($total.text());
         curVal += val;
