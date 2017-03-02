@@ -1,4 +1,8 @@
 (function($) {
+
+    /**
+    * Proccess each total.
+    */
     function proc_totals(index, item) {
         var classes = item.classList,
             classesl = classes.length,
