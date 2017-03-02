@@ -1,7 +1,26 @@
 (function($) {
 
-    function field_box($total, $field){
+    function setVal($total, val) {
+        var curVal = parseFloat($total.text());
+        curVal += val;
+        $total.text(curVal);
+    }
 
+    function field_box($total, $field){
+        var fchecked = $field.prop('checked'),
+            fval = parseFloat($field.attr('value'));
+
+        function change(e) {
+            if ($field.prop('checked')){
+                setVal($total, fval);
+            }
+            else {
+                setVal($total, -fval);
+            }
+        }
+
+        if(fchecked) { setVal($total, fval); }
+        $field.change(change);
     }
 
     function proc_field($total, $field){
@@ -9,7 +28,7 @@
         switch (type) {
             case 'radio':
             case 'checkbox':
-                field_box($total, field)
+                field_box($total, $field)
                 break;
         }
     }
