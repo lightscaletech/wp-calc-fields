@@ -1,7 +1,17 @@
 (function($) {
 
-    function proc_field($total, $field){
+    function field_box($total, $field){
 
+    }
+
+    function proc_field($total, $field){
+        var type = $field.attr('type');
+        switch (type) {
+            case 'radio':
+            case 'checkbox':
+                field_box($total, field)
+                break;
+        }
     }
 
     /**
