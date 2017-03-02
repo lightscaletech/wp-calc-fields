@@ -32,13 +32,15 @@ function lscf_nomalise_id($id)
 
 function lscf_sc_total($args, $content)
 {
-    $atts = shortcode_atts(array('id' => ''),
+    $atts = shortcode_atts(array('id' => '',
+                                 'decimal' => '2'),
                            $args);
     $id = lscf_nomalise_id($atts['id']);
+    $decimal = $atts['decimal'];
 
     lscf_shortcode_init();
 
-    $o  = "<span class=\"lscf_total {$id}\">";
+    $o  = "<span class=\"lscf_total {$id}\" data-decimal=\"{$decimal}\">";
     $o .= $content;
     $o .= '</span>';
 
