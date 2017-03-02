@@ -51,16 +51,20 @@ function lscf_sc_checkbox($args, $content)
     global $fieldCounter;
 
     $atts = shortcode_atts(array('id' => '',
-                                 'value' => '0'),
+                                 'value' => '0',
+                                 'checked' => '0'),
                            $args);
     $id = lscf_nomalise_id($atts['id']);
     $hid = 'lscf_cb_' . $fieldCounter++;
     $val = floatval($atts['value']);
+    $checked = (bool) intval($attr['checked']);
+    $checked = ($checked ? 'checked="checked"' : '');
+
     lscf_shortcode_init();
 
-    $o  = "<label for=\"{$hid}\">{$content}</label> ";
-    $o .= "<input type=\"checkbox\" id=\"{$hid}\" class=\"lscf_field {$id}\" " .
-          " value=\"{$val}\" \>";
+    $o  = "<input type=\"checkbox\" id=\"{$hid}\" class=\"lscf_field {$id}\" " .
+          " value=\"{$val}\" {$checked} \>";
+    $o .= "<label for=\"{$hid}\">{$content}</label> ";
 
     return $o;
 }
