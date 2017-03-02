@@ -1,12 +1,16 @@
 (function($) {
 
+    function proc_field($total, $field){
+
+    }
+
     /**
     * Proccess each total.
     */
     function proc_totals(index, item) {
         var classes = item.classList,
             classesl = classes.length,
-
+            $total = $(item),
             cls = null,     // classes on total
             id = null,      // id of fields to be using
             $fields = null; // fields to control total
@@ -22,11 +26,13 @@
         // If ID exists use fields with the ID.
         // Else use any field found on the page.
         if(id) {
-            $fields = $('.lscf_field .' + id);
+            $fields = $('.lscf_field.' + id);
         }
         else {
             $fields = $('.lscf_field');
         }
+
+        $fields.each(function(index, item){ proc_field($total, $(item)); });
     }
 
     /**
