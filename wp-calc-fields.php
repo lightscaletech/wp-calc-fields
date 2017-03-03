@@ -80,6 +80,7 @@ add_shortcode('lscf_checkbox', 'lscf_sc_checkbox');
 $lscf_radio_name = '';
 $lscf_radio_id = '';
 $lscf_radio_name_counter = 0;
+$lscf_radio_hid_counter = 0;
 
 function lscf_radio_glob_reset() {
     global $lscf_radio_name, $lscf_radio_id;
@@ -95,9 +96,8 @@ function lscf_sc_radios($args, $content) {
     $atts = shortcode_atts(array('id' => '',
                                  'name' => $lscf_radio_name_counter++),
                            $args);
-    $name = $atts['name'];
-    $lscf_radio_id = lscf_nomalise_id($atts['id']);
-    $lscf_radio_name = "name=\"lscf_{$name}\"";
+    $lscf_radio_id = $atts['id'];
+    $lscf_radio_name = $atts['name'];
 
     $o = do_shortcode($content);
 
@@ -105,4 +105,26 @@ function lscf_sc_radios($args, $content) {
 
     return $o;
 }
-add_shorcode('lscf_checkbox', 'lscf_sc_radios');
+add_shortcode('lscf_radio_group', 'lscf_sc_radios');
+
+function lscf_sc_radio($args, $content) {
+    global $lscf_radio_name, $lscf_radio_id, $lscf_radio_hid_counter;
+
+    $atts = shortcode_atts(array('id' => $lscf_radio_id,
+                                 'name' => $lscf_radio_name,
+                                 'value' => '0'),
+                           $args);
+
+    $id = lscf_normalise_id($atts['id']);
+    $hid = 'lscf_rdo_' . $lscf_radio_hid_counter;
+    $name = $atts['name'];
+    $name = "name=\"lscf_{$name}\"";
+    $value = $atts['value'];
+
+    $o  = "<input id=\"{$hid}\" name=\"{$name}\" value=\"{$value}\" " .
+          "type=\"radio\" />";
+    $o .= "<label for=\"{$hid}\">{$content}</label>";
+
+    return $o;
+}
+add_shortcode('lscf_radio', 'lscf_sc_radio');
