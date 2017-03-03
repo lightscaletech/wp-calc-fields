@@ -112,6 +112,7 @@ function lscf_sc_radio($args, $content) {
 
     $atts = shortcode_atts(array('id' => $lscf_radio_id,
                                  'name' => $lscf_radio_name,
+                                 'checked' => '0',
                                  'value' => '0'),
                            $args);
 
@@ -120,9 +121,11 @@ function lscf_sc_radio($args, $content) {
     $name = $atts['name'];
     $name = "name=\"lscf_{$name}\"";
     $value = $atts['value'];
+    $checked = (bool) intval($atts['checked']);
+    $checked = $checked ? 'checked="checked"' : '';
 
     $o  = "<input id=\"{$hid}\" name=\"{$name}\" value=\"{$value}\" " .
-          "type=\"radio\" class=\"lscf_field {$id}\" />";
+          "type=\"radio\" class=\"lscf_field {$id}\" {$checked} />";
     $o .= "<label for=\"{$hid}\">{$content}</label>";
 
     return $o;
