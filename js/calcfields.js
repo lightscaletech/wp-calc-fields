@@ -24,30 +24,52 @@
         $total.text(round_tbased($total, curVal));
     }
 
-    function field_box($total, $field){
+    function field_checkbox($total, $field){
         var fchecked = $field.prop('checked'),
             fval = parseFloat($field.attr('value'));
 
         function change(e) {
-            if ($field.prop('checked')){
-                setVal($total, fval);
-            }
-            else {
-                setVal($total, -fval);
-            }
+            if ($field.prop('checked')){ setVal($total, fval); }
+            else { setVal($total, -fval); }
         }
 
         if(fchecked) { setVal($total, fval); }
         $field.change(change);
     }
 
+    function set_last_val($field, val) {
+        var name = $field.attr('name'),
+            fs = $('input[name=' + name + ']');
+        fs.data('lastval', val);
+    }
+
+    function get_last_val($field) {
+        return $field.data('lastval');
+    }
+
+    function field_radio($total, $field){
+        var fchecked = $field.prop('checked'),
+            fval = parseFloat($field.attr('value'));
+
+        function change(e) {
+            var lastval = get_last_val($field);
+            fval = parseFloat($field.attr('value'));
+            setVal($total, fval - lastval);
+            set_last_val($field, fval);
+        }
+
+        if(fchecked) {
+            setVal($total, fval);
+            set_last_val($field, fval);
+        }
+        $field.change(change);
+    }
+
     function proc_field($total, $field){
         var type = $field.attr('type');
         switch (type) {
-            case 'radio':
-            case 'checkbox':
-                field_box($total, $field)
-                break;
+            case 'radio':    field_radio($total, $field);    break;
+            case 'checkbox': field_checkbox($total, $field); break;
         }
     }
 
