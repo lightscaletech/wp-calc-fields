@@ -124,7 +124,7 @@ function lscf_sc_radio($args, $content) {
     $checked = (bool) intval($atts['checked']);
     $checked = $checked ? 'checked="checked"' : '';
 
-    $o  = "<input id=\"{$hid}\" name=\"{$name}\" value=\"{$value}\" " .
+    $o  = "<input id=\"{$hid}\" {$name} value=\"{$value}\" " .
           "type=\"radio\" class=\"lscf_field {$id}\" {$checked} />";
     $o .= "<label for=\"{$hid}\">{$content}</label>";
 
