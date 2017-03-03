@@ -71,3 +71,38 @@ function lscf_sc_checkbox($args, $content)
     return $o;
 }
 add_shortcode('lscf_checkbox', 'lscf_sc_checkbox');
+
+/**
+* Radio fields definition
+* There is a radio group wrapper shortcode that set globals to make it easier
+* to write the radio fields.
+*/
+$lscf_radio_name = '';
+$lscf_radio_id = '';
+$lscf_radio_name_counter = 0;
+
+function lscf_radio_glob_reset() {
+    global $lscf_radio_name, $lscf_radio_id;
+    $lscf_radio_name = "";
+    $lscf_radio_id = "";
+}
+
+function lscf_sc_radios($args, $content) {
+    global $lscf_radio_name,
+           $lscf_radio_id,
+           $lscf_radio_name_counter;
+
+    $atts = shortcode_atts(array('id' => '',
+                                 'name' => $lscf_radio_name_counter++),
+                           $args);
+    $name = $atts['name'];
+    $lscf_radio_id = lscf_nomalise_id($atts['id']);
+    $lscf_radio_name = "name=\"lscf_{$name}\"";
+
+    $o = do_shortcode($content);
+
+    lscf_radio_glob_reset();
+
+    return $o;
+}
+add_shorcode('lscf_checkbox', 'lscf_sc_radios');
