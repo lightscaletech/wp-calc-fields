@@ -59,7 +59,7 @@ function lscf_sc_checkbox($args, $content)
     $id = lscf_nomalise_id($atts['id']);
     $hid = 'lscf_cb_' . $fieldCounter++;
     $val = floatval($atts['value']);
-    $checked = (bool) intval($attr['checked']);
+    $checked = (bool) intval($atts['checked']);
     $checked = ($checked ? 'checked="checked"' : '');
 
     lscf_shortcode_init();
@@ -115,14 +115,14 @@ function lscf_sc_radio($args, $content) {
                                  'value' => '0'),
                            $args);
 
-    $id = lscf_normalise_id($atts['id']);
-    $hid = 'lscf_rdo_' . $lscf_radio_hid_counter;
+    $id = lscf_nomalise_id($atts['id']);
+    $hid = 'lscf_rdo_' . $lscf_radio_hid_counter++;
     $name = $atts['name'];
     $name = "name=\"lscf_{$name}\"";
     $value = $atts['value'];
 
     $o  = "<input id=\"{$hid}\" name=\"{$name}\" value=\"{$value}\" " .
-          "type=\"radio\" />";
+          "type=\"radio\" class=\"lscf_field {$id}\" />";
     $o .= "<label for=\"{$hid}\">{$content}</label>";
 
     return $o;
