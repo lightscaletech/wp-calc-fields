@@ -4,10 +4,24 @@
         return parseInt($total.data('decimal'));
     }
 
+    function round_dp(val, d) {
+        var tens = Math.pow(10, d);
+        if (d < 0){
+            return val;
+        }
+        else {
+            return Math.round(val * tens) / tens;
+        }
+    }
+
+    function round_tbased($total, val) {
+        return round_dp(val, get_decimal_from_total($total));
+    }
+
     function setVal($total, val) {
-        var curVal = parseFloat($total.text());
-        curVal += val;
-        $total.text(curVal);
+        var curVal = round_tbased($total, parseFloat($total.text()));
+        curVal += round_tbased($total, val);
+        $total.text(round_tbased($total, curVal));
     }
 
     function field_box($total, $field){
