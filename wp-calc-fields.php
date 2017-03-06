@@ -48,6 +48,25 @@ function lscf_sc_total($args, $content)
 }
 add_shortcode('lscf_total', 'lscf_sc_total');
 
+
+function lscf_sc_total_times($args)
+{
+    $atts = shortcode_atts(array('id' => '',
+                                 'times' => '1'),
+                           $args);
+    $id = lscf_nomalise_id($atts['id']);
+    $times = $atts['times'];
+
+    lscf_shortcode_init();
+
+    $o  = "<span class=\"lscf_total_times {$id}\" data-times=\"{$times}\">";
+    $o .= '</span>';
+
+    return $o;
+}
+add_shortcode('lscf_total_times', 'lscf_sc_total_times');
+
+
 function lscf_sc_checkbox($args, $content)
 {
     global $fieldCounter;
