@@ -98,12 +98,14 @@
 
     function proc_total_times(index, item) {
         var $tt = $(item),
-            times = parseInt($tt.data('times')),
+            times = parseFloat($tt.data('times')),
             $total = $('.lscf_total' + find_id(item)).first();
 
         function settotal(ev) {
             $tt.text(
-                round_dp(parseFloat($total.text()) * times, 2));
+                round_tbased(
+                    $total,
+                    parseFloat($total.text()) * times));
         }
         settotal();
         $total.on('valuechange', settotal);

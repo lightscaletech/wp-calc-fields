@@ -2,7 +2,7 @@
 /*
    Plugin Name: Calculation fields
    Description: A set of shortcodes to calculate a total on a post
-   Version:     0.0.1
+   Version:     0.0.2
    Author:      Lightscale Tech Ltd
    Author URI:  http://lightscale.co.uk/
    License:     GPL3
@@ -33,7 +33,7 @@ function lscf_nomalise_id($id)
 function lscf_sc_total($args, $content)
 {
     $atts = shortcode_atts(array('id' => '',
-                                 'decimal' => '2'),
+                                 'decimal' => '0'),
                            $args);
     $id = lscf_nomalise_id($atts['id']);
     $decimal = $atts['decimal'];
