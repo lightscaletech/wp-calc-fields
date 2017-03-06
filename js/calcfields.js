@@ -22,6 +22,7 @@
         var curVal = round_tbased($total, parseFloat($total.text()));
         curVal += round_tbased($total, val);
         $total.text(round_tbased($total, curVal));
+        $total.trigger('valuechange');
     }
 
     function field_checkbox($total, $field){
@@ -73,41 +74,46 @@
         }
     }
 
-    /**
-    * Proccess each total.
-    */
-    function proc_totals(index, item) {
+    function find_id(item) {
         var classes = item.classList,
             classesl = classes.length,
-            $total = $(item),
-            cls = null,     // classes on total
-            id = null,      // id of fields to be using
-            $fields = null; // fields to control total
+            cls = '', i = 0, id = '';
 
         // Find total id in classes
         for( i = 0; i < classesl; ++i) {
             cls = classes[i];
-            if(cls.startsWith('lscf_id_')) {
-                id = cls;
-            }
+            if(cls.startsWith('lscf_id_')) { return '.' + cls; }
         }
+        return id;
+    }
 
-        // If ID exists use fields with the ID.
-        // Else use any field found on the page.
-        if(id) {
-            $fields = $('.lscf_field.' + id);
-        }
-        else {
-            $fields = $('.lscf_field');
-        }
-
+    /**
+    * Proccess each total.
+    */
+    function proc_totals(index, item) {
+        var $total = $(item),
+            $fields = $('.lscf_field' + find_id(item)); // fields to control total
         $fields.each(function(index, item){ proc_field($total, $(item)); });
+    }
+
+    function proc_total_times(index, item) {
+        var $tt = $(item),
+            times = parseInt($tt.data('times')),
+            $total = $('.lscf_total' + find_id(item)).first();
+
+        function settotal(ev) {
+            $tt.text(
+                round_dp(parseFloat($total.text()) * times, 2));
+        }
+        settotal();
+        $total.on('valuechange', settotal);
     }
 
     /**
     * Loop through all total shortcodes on page.
     */
     $(function() {
+        $('.lscf_total_times').each(proc_total_times);
         $('.lscf_total').each(proc_totals);
     })
 
