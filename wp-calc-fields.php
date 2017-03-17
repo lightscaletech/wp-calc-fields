@@ -2,7 +2,7 @@
 /*
    Plugin Name: Calculation fields
    Description: A set of shortcodes to calculate a total on a post
-   Version:     0.0.2
+   Version:     0.0.3
    Author:      Lightscale Tech Ltd
    Author URI:  http://lightscale.co.uk/
    License:     GPL3
