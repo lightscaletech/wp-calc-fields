@@ -45,7 +45,9 @@
     }
 
     function get_last_val($field) {
-        return $field.data('lastval');
+        var lv = $field.data('lastval');
+        if (typeof lv === 'undefined'){return 0;}
+        return lv;
     }
 
     function field_radio($total, $field){
@@ -54,16 +56,36 @@
 
         function change(e) {
             var lastval = get_last_val($field);
+
             fval = parseFloat($field.attr('value'));
             setVal($total, fval - lastval);
             set_last_val($field, fval);
+        }
+
+        function clicked(e) {
+            var is_checked = $field[0].checked,
+                lval = get_last_val($field);
+
+            if (!is_checked) return;
+
+            $field.one('click', function(e){e.preventDefault();});
+
+            setVal($total, -lval);
+            set_last_val($field, 0);
+            $field.prop('checked', false);
+        }
+
+        function lab_click(e) {
+            $field.trigger('mouseup');
         }
 
         if(fchecked) {
             setVal($total, fval);
             set_last_val($field, fval);
         }
-        $field.change(change);
+        $field.on('mouseup', clicked);
+        $field.on('change', change);
+        $('label[for=' + $field.attr('id') + ']').click(lab_click);
     }
 
     function proc_field($total, $field){
